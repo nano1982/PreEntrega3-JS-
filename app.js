@@ -13,8 +13,10 @@ let valorB3 = ""
 let valorC1 = ""
 let valorC2 = ""
 let valorC3 = ""
+let mensaje // para anunciar al ganador
 
 const jugadores = []
+let ganador
 
 // preparo las variables para los jugadores
 let jugador1 = document.getElementById("jugador1")
@@ -142,6 +144,9 @@ function pulsar(tecla)
         // avisa de quién es el turno
         td_nombre.innerHTML = `<strong>Turno</strong>: ${jugadores[1].nombre}`
         tecla.classList.add('btn-info')
+        tecla.setAttribute("disabled", "")
+        turno++
+        return valorTecla
         
     }
     else
@@ -152,10 +157,11 @@ function pulsar(tecla)
         // avisa de quién es el turno
         td_nombre.innerHTML = `<strong>Turno</strong>: ${jugadores[0].nombre}`
         tecla.classList.add('btn-warning')
+        tecla.setAttribute("disabled", "")
+        turno++
+        return valorTecla
     }
-    tecla.setAttribute("disabled", "")
-    turno++
-    return valorTecla
+    
 }
 
 // verifica si hay tateti vertical
@@ -179,6 +185,8 @@ function vertical()
         b3.setAttribute("disabled", "")
         c2.setAttribute("disabled", "")
         c3.setAttribute("disabled", "")
+
+        return true
     
        
     }
@@ -200,6 +208,8 @@ function vertical()
         c1.setAttribute("disabled", "")
         c3.setAttribute("disabled", "")
 
+        return true
+
     }
     else if (valorA3 == valorB3 && valorB3 == valorC3 && valorA3 != "" && valorA3 != undefined)
     {
@@ -218,6 +228,12 @@ function vertical()
         b2.setAttribute("disabled", "")
         c1.setAttribute("disabled", "")
         c2.setAttribute("disabled", "")
+
+        return true
+    }
+    else
+    {
+        return false
     }
 }
 
@@ -244,6 +260,8 @@ function horizontal()
         c3.setAttribute("disabled", "")
 
 
+        return true
+
     }
     if (valorB1 == valorB2 && valorB2 == valorB3 && valorB1 != "" && valorB1 != undefined)
     {
@@ -263,7 +281,7 @@ function horizontal()
         c2.setAttribute("disabled", "")
         c3.setAttribute("disabled", "")
 
-
+        return true
     }
     if (valorC1 == valorC2 && valorC2 == valorC3 && valorC1 != "" && valorC1 != undefined)
     {
@@ -282,6 +300,12 @@ function horizontal()
         b1.setAttribute("disabled", "")
         b2.setAttribute("disabled", "")
         b3.setAttribute("disabled", "")
+
+        return true
+    }
+    else
+    {
+        return false
     }   
 
 }
@@ -305,8 +329,9 @@ function diagonal()
         b3.setAttribute("disabled", "")
         c1.setAttribute("disabled", "")
         c2.setAttribute("disabled", "")
-        
 
+        return true
+        
     }
     else if (valorA3 == valorB2 && valorB2 == valorC1 && valorA3 != "" && valorA3 != undefined)
     {
@@ -325,47 +350,129 @@ function diagonal()
         b3.setAttribute("disabled", "")
         c2.setAttribute("disabled", "")
         c3.setAttribute("disabled", "")
+
+        return true
+    }
+    else
+    {
+        return false
     } 
 
 }
 
+function chequear()
+{
+    if (horizontal())
+    {
+        if (turno %2 == 0)
+        {
+            ganador = jugadores[1].nombre;
+            jugadores[1].contador++  
+        }
+        else
+        {
+            ganador = jugadores[0].nombre;
+            jugadores[0].contador++
+
+        }
+        mensaje = "¡Ganaste! ".concat(ganador)
+        alert(mensaje)
+        tablita.innerHTML = ''
+        foot_tabla = ''
+        actualizar_tabla()
+    }
+    else if(vertical())
+    {
+        if (turno %2 == 0)
+        {
+            ganador = jugadores[1].nombre;
+            jugadores[1].contador++  
+        }
+        else
+        {
+            ganador = jugadores[0].nombre;
+            jugadores[0].contador++
+
+        }
+        mensaje = "¡Ganaste! ".concat(ganador)
+        alert(mensaje)
+        tablita.innerHTML = ''
+        foot_tabla = ''
+        actualizar_tabla()
+    }
+    else if(diagonal())
+    {
+        if (turno %2 == 0)
+        {
+            ganador = jugadores[1].nombre;
+            jugadores[1].contador++  
+        }
+        else
+        {
+            ganador = jugadores[0].nombre;
+            jugadores[0].contador++
+
+        }
+        mensaje = "¡Ganaste! ".concat(ganador)
+        alert(mensaje)
+        tablita.innerHTML = ''
+        foot_tabla = ''
+        actualizar_tabla()
+    }
+    else if (turno == 9)
+    {
+        alert("¡Empate!")
+        jugadores[0].empates++
+        jugadores[1].empates++
+        tablita.innerHTML = ''
+        foot_tabla = ''
+        actualizar_tabla()
+    }
+}
+
 
 // addEventListener de cada casilla
-valorA1 = a1.addEventListener('click', () => {
-    pulsar(a1)
-})
-valorA2 = a2.addEventListener('click', () => {
-    pulsar(a2)
-    chequeo()
+a1.addEventListener('click', () => {
+    valorA1 = pulsar(a1)
+    chequear()
 })
 
-valorA3 = a3.addEventListener('click', () => {
-    pulsar(a3)
-    chequeo()
-})
-valorB1 = b1.addEventListener('click', () => {
-    pulsar(b1)
-    chequeo()
-})
-valorB2 = b2.addEventListener('click', () => {
-    pulsar(b2)
-    chequeo()
+a2.addEventListener('click', () => {
+    valorA2 = pulsar(a2)
+    chequear()
 })
 
-valorB3 = b3.addEventListener('click', () => {
-    pulsar(b3)
-    chequeo()
-})
-valorC1 = c1.addEventListener('click', () => {
-    pulsar(c1)
-    chequeo()
-})
-valorC2 = c2.addEventListener('click', () => {
-    pulsar(c2)
-    chequeo()
+a3.addEventListener('click', () => {
+    valorA3 = pulsar(a3)
+    chequear()
 })
 
-valorC3 = c3.addEventListener('click', () => {
-    pulsar(c3)
-    chequeo()
+b1.addEventListener('click', () => {
+    valorB1 = pulsar(b1)
+    chequear()
+})
+
+b2.addEventListener('click', () => {
+    valorB2 = pulsar(b2)
+    chequear()   
+})
+
+b3.addEventListener('click', () => {
+    valorB3 = pulsar(b3)
+    chequear()
+})
+
+c1.addEventListener('click', () => {
+    valorC1 = pulsar(c1)
+    chequear()   
+})
+
+c2.addEventListener('click', () => {
+    valorC2 = pulsar(c2)
+    chequear()
+})
+
+c3.addEventListener('click', () => {
+    valorC3 = pulsar(c3)
+    chequear()
 })
