@@ -86,11 +86,13 @@ enviar.addEventListener('click', (evento) =>
 
 })
 
+
+jugadores = JSON.parse(localStorage.getItem('jugadores')) || []
+
+
 // función para crear la tabla de posiciones de los jugadores
 function actualizar_tabla()
 {
-    
-    
     const tablita = document.getElementById("tablita")
     let fila
     jugadores.forEach((item) => {
