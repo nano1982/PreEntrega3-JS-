@@ -90,7 +90,7 @@ enviar.addEventListener('click', (evento) =>
 function actualizar_tabla()
 {
     
-    jugadores = JSON.parse(localStorage.getItem('jugadores'))
+    
     const tablita = document.getElementById("tablita")
     let fila
     jugadores.forEach((item) => {
