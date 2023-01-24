@@ -15,7 +15,7 @@ let valorC2 = ""
 let valorC3 = ""
 let mensaje // para anunciar al ganador
 
-const jugadores = []
+let jugadores = []
 let ganador
 
 // preparo las variables para los jugadores
@@ -89,6 +89,8 @@ enviar.addEventListener('click', (evento) =>
 // función para crear la tabla de posiciones de los jugadores
 function actualizar_tabla()
 {
+    
+    jugadores = JSON.parse(localStorage.getItem('jugadores'))
     const tablita = document.getElementById("tablita")
     let fila
     jugadores.forEach((item) => {
@@ -367,12 +369,14 @@ function chequear()
         if (turno %2 == 0)
         {
             ganador = jugadores[1].nombre;
-            jugadores[1].contador++  
+            jugadores[1].contador++
+            localStorage.setItem('jugadores', JSON.stringify(jugadores))
         }
         else
         {
             ganador = jugadores[0].nombre;
             jugadores[0].contador++
+            localStorage.setItem('jugadores', JSON.stringify(jugadores))
 
         }
         mensaje = "¡Ganaste! ".concat(ganador)
@@ -386,12 +390,14 @@ function chequear()
         if (turno %2 == 0)
         {
             ganador = jugadores[1].nombre;
-            jugadores[1].contador++  
+            jugadores[1].contador++
+            localStorage.setItem('jugadores', JSON.stringify(jugadores)) 
         }
         else
         {
             ganador = jugadores[0].nombre;
             jugadores[0].contador++
+            localStorage.setItem('jugadores', JSON.stringify(jugadores))
 
         }
         mensaje = "¡Ganaste! ".concat(ganador)
@@ -405,12 +411,14 @@ function chequear()
         if (turno %2 == 0)
         {
             ganador = jugadores[1].nombre;
-            jugadores[1].contador++  
+            jugadores[1].contador++
+            localStorage.setItem('jugadores', JSON.stringify(jugadores))  
         }
         else
         {
             ganador = jugadores[0].nombre;
             jugadores[0].contador++
+            localStorage.setItem('jugadores', JSON.stringify(jugadores))
 
         }
         mensaje = "¡Ganaste! ".concat(ganador)
@@ -424,6 +432,7 @@ function chequear()
         alert("¡Empate!")
         jugadores[0].empates++
         jugadores[1].empates++
+        localStorage.setItem('jugadores', JSON.stringify(jugadores))
         tablita.innerHTML = ''
         foot_tabla = ''
         actualizar_tabla()
